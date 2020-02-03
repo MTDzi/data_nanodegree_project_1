@@ -93,6 +93,10 @@ def process_log_file(cur, filepath):
         else:
             song_id, artist_id = None, None
 
+        if song_id is None or artist_id is None:
+            # These are foreign keys, cannot be NULL
+            return
+        
         hash_ = md5(bytes(str(row.ts) + row.userId, 'utf-8')).hexdigest()
         # insert songplay record
         songplay_data = (
