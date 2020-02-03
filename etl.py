@@ -2,7 +2,6 @@ import os
 import glob
 import psycopg2
 import pandas as pd
-from hashlib import md5
 from datetime import datetime
 
 from sql_queries import *
@@ -97,10 +96,8 @@ def process_log_file(cur, filepath):
             # These are foreign keys, cannot be NULL
             return
         
-        hash_ = md5(bytes(str(row.ts) + row.userId, 'utf-8')).hexdigest()
         # insert songplay record
         songplay_data = (
-            hash_,  # songplay_id
             row.ts // 1000,  # start_time
             row.userId,  # user_id
             row.level,  # level
